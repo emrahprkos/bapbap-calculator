@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BAPBAP Build Calculator</title>
+  <meta name="description" content="Unofficial BAPBAP build and damage calculator based on extracted game configuration and traced formulas.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">✦</span>
+      <div><h1>BAPBAP Build Calculator</h1><p class="sub">Unofficial · data from game build <span id="build"></span></p></div>
+    </div>
+    <div class="top-actions">
+      <label class="toggle" title="Apply league disabled augments and character restriction">
+        <input type="checkbox" id="league"><span class="track"><span class="thumb"></span></span><span>League preset</span>
+      </label>
+      <button id="theme" class="ghost" aria-label="Toggle colour theme">◐</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="col build" aria-label="Build">
+      <div class="card">
+        <h2>Character</h2>
+        <div id="chars" class="chars" role="listbox" aria-label="Characters"></div>
+      </div>
+
+      <div class="card">
+        <div class="row-between"><h2>Augments</h2><span id="pickCount" class="muted"></span></div>
+        <div id="picked" class="picked"></div>
+        <div class="search-row">
+          <input id="search" type="search" placeholder="Search augments…" aria-label="Search augments">
+          <div class="seg" role="tablist">
+            <button data-f="all" class="on">All</button><button data-f="generic">Generic</button><button data-f="character">Character</button>
+          </div>
+        </div>
+        <div class="legend">
+          <span class="badge calc">Calculated</span> stats included in numbers
+          <span class="badge part">Effect described</span> effect traced, not in numbers
+          <span class="badge desc">Description only</span>
+        </div>
+        <div id="augList" class="aug-list"></div>
+      </div>
+
+      <div class="card">
+        <h2>Target</h2>
+        <div class="grid2">
+          <label>Character<select id="tChar"></select></label>
+          <label>Bonus max HP<input id="tHp" type="number" value="0" step="50"></label>
+          <label>Shield<input id="tShield" type="number" value="0" step="50" min="0"></label>
+          <label>Defense<input id="tDef" type="number" value="0" step="0.05"></label>
+          <label>Thorns<input id="tThorns" type="number" value="0" step="0.05" min="0"></label>
+          <label class="check"><input id="crit" type="checkbox"> Show crit hits</label>
+        </div>
+        <p class="hint">Target is a player. Defense and thorns are entered as fractions (0.2 = 20%).</p>
+      </div>
+
+      <div class="card">
+        <h2>Builds</h2>
+        <div class="build-actions">
+          <input id="buildName" placeholder="Build name" aria-label="Build name">
+          <button id="save">Save</button>
+          <button id="share" class="ghost">Copy share link</button>
+        </div>
+        <div id="saved" class="saved"></div>
+      </div>
+    </section>
+
+    <section class="col results" aria-label="Results">
+      <div id="warnings"></div>
+      <div class="card">
+        <div class="row-between"><h2 id="charTitle">Stats</h2><span id="statBadge"></span></div>
+        <div id="stats" class="stats"></div>
+      </div>
+      <div id="abilities"></div>
+      <div class="card">
+        <h2>Healing</h2>
+        <div id="healing"></div>
+      </div>
+      <footer class="foot">
+        <p><b>How to read labels.</b> <span class="badge live">Live-verified hit</span> the per-hit value was observed in game under the same conditions (no augments, Dmg 0, non-crit, no target defense; training 2026-11-16). Crit, mitigation, lifesteal, thorns and kill counts are always code-derived. <span class="badge code">Code-derived</span> computed from formulas traced in the game code but not yet observed. Numbers never claim more certainty than their weakest input.</p>
+        <p>Not affiliated with BAPBAP. No result here identifies a "best" build; it only reports what the known formulas give.</p>
+      </footer>
+    </section>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
